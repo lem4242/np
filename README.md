@@ -6,17 +6,20 @@ every character is an output token.
 
 ## `v.js`
 
-Interactive tree-explorer engine (the workspace "finder"/"view"). Exports
-`mount(selector, data)`; the data tree lives in the caller, not here.
+Collapsible workspace browser. A black launcher bar shows the current path
+(`nuco > loaf > assets`) with a down-arrow; click it to drop the tree, click a
+path segment to jump up, a folder to go in, a leaf to show its `note`. The engine
+and all CSS live here — the caller injects **only** the data.
 
 ```js
-import { mount } from 'https://cdn.jsdelivr.net/gh/lem4242/np@v1/v.js';
-mount('#xp', DATA);
+import { mount } from 'https://cdn.jsdelivr.net/gh/lem4242/np@v2/v.js';
+mount('#xp', DATA);                 // or mount('#xp', DATA, { root:'nuco', sep:'>', open:false })
 ```
 
 Each node: `{ n:'name', m:'meta', b:['badge','tone'], note:'detail', c:[…children…] }`.
 `c` present → folder (click to open); no `c` → leaf (click shows `note`).
 Badge tones: `m` muted · `i` info/shared · `w` read-only · `o` world/public.
+Opts: `root` (bar root label), `sep` (path separator), `open` (start expanded).
 
-Versioned by tag (`@v1`, `@v2`, …) — jsDelivr caches pinned tags permanently, so
-bump the tag to ship an engine change. Consumed by the `workspace-explorer` skill.
+Versioned by tag (`@v1` = tree/breadcrumb, `@v2` = bar). jsDelivr caches pinned
+tags permanently, so bump the tag to ship an engine change. Consumed by the `nuco` skill.
